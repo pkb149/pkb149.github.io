@@ -7,6 +7,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- CDN links for jsPDF and jsPDF-AutoTable to enable text-based PDF download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
     <style>
         /* General body and container styling */
         body {
@@ -62,7 +67,7 @@
             align-items: center;
             gap: 8px;
         }
-        
+
         .contact-info a {
             color: #666;
             text-decoration: none;
@@ -167,16 +172,90 @@
             font-weight: 600;
             color: #333;
         }
-        
+
         .skill-category {
             font-weight: 600;
             color: #1a237e;
+        }
+
+        /* Floating button style */
+        .download-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            padding: 0;
+            background-color: #007bff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            color: #fff;
+        }
+
+        .download-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        .download-button:active {
+            transform: translateY(0);
+        }
+
+        .download-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .download-button svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* Tooltip-like text for the button */
+        .button-text {
+            position: absolute;
+            top: 50%;
+            left: -120px; /* Position to the left of the button */
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .download-button:hover .button-text {
+            opacity: 1;
         }
     </style>
 </head>
 <body>
 
-    <div class="resume-container">
+    <!-- Download button with updated icon, position, and style -->
+    <button id="download-pdf-btn" class="download-button" title="Download as PDF">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M19.35 10.04C18.67 6.59 15.33 4 11.5 4c-3.13 0-5.84 2.07-6.9 4.9C3.76 9.47 3 10.74 3 12c0 2.21 1.79 4 4 4h12c1.65 0 3-1.35 3-3 0-1.54-1.12-2.82-2.65-2.96zM17 13l-4 4v-4h-2v4l-4-4h3V7h2v6h3z"/>
+        </svg>
+        <span id="button-status" class="button-text">Download as PDF</span>
+    </button>
+
+
+    <div class="resume-container" id="resume-container">
+
         <header class="header">
             <h1>PRASHANT BHARADWAJ</h1>
             <p>Lead DevOps Engineer @ Games24x7 | Observability, Kubernetes, AWS</p>
@@ -184,7 +263,7 @@
                 <li><span>Email:</span> prashantkumarbharadwaj@gmail.com</li>
                 <li><span>Location:</span> Bangalore, India</li>
                 <li><span>Phone:</span> +91-8179021658</li>
-                <li><span>LinkedIn:</span> <a href="https://www.linkedin.com/in/pkb149/" target="_blank">pkb149</a></li>
+                <li><span>GitHub:</span> <a href="https://github.com/pkb149" target="_blank">pkb149</a></li>
             </ul>
         </header>
 
@@ -195,7 +274,7 @@
 
         <section class="section experience">
             <h2 class="section-title">EXPERIENCE</h2>
-            
+
             <div class="experience-item">
                 <div class="experience-header">
                     <h3>SDE II -> SDE III, DevOps, Games24x7</h3>
@@ -261,7 +340,7 @@
                     <li>Worked on performance testing of the Data Apps and helped the team to optimise the performance of the App.</li>
                 </ul>
             </div>
-            
+
             <div class="experience-item">
                 <div class="experience-header">
                     <h3>Site Reliability Engineer, Soroco</h3>
@@ -310,24 +389,24 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="skill-category">Observability - Expert</td>
-                        <td>Prometheus, Grafana, Open Telemetry, Sumologic, Signoz, PagerDuty, Alertmanager, Clickhouse, Cloudwatch</td>
+                        <td class="skill-category">Observability</td>
+                        <td>Prometheus, Grafana, otel, sumologic, signoz, pagerduty, alertmanager, clickhouse</td>
                     </tr>
                     <tr>
-                        <td class="skill-category">Cloud Provider - Proficient</td>
-                        <td>AWS </td>
+                        <td class="skill-category">Cloud Provider</td>
+                        <td>AWS</td>
                     </tr>
                     <tr>
-                        <td class="skill-category">Container Orchestration - Proficient</td>
-                        <td>Docker, Kubernetes, Karpenter, Helm</td>
+                        <td class="skill-category">Kubernetes</td>
+                        <td>EKS, Karpenter</td>
                     </tr>
                     <tr>
-                        <td class="skill-category">CI/CD - Competent</td>
-                        <td>Jenkins, ArgoCD, ArgoRollouts, Github Actions, Gitlab-ci, Atlantis</td>
+                        <td class="skill-category">CI/CD</td>
+                        <td>Jenkins, ArgoCD, ArgoRollouts, github actions, gitlab-ci, atlantis</td>
                     </tr>
                     <tr>
-                        <td class="skill-category">Infrastructure as Code - Proficient</td>
-                        <td>Terraform, Ansible</td>
+                        <td class="skill-category">IaC</td>
+                        <td>terraform, ansible</td>
                     </tr>
                 </tbody>
             </table>
@@ -342,9 +421,216 @@
         </section>
     </div>
 
-    <!-- Minimal JavaScript section as requested. No functionality needed for this static resume. -->
     <script>
-        console.log("Resume HTML loaded successfully!");
+        document.addEventListener('DOMContentLoaded', () => {
+            const downloadBtn = document.getElementById('download-pdf-btn');
+            const resumeContainer = document.getElementById('resume-container');
+
+            downloadBtn.addEventListener('click', () => {
+                downloadBtn.disabled = true;
+                downloadBtn.innerHTML = '<span class="button-text">Generating...</span>';
+
+                // Use a timeout to allow the UI to update before starting PDF generation
+                setTimeout(() => {
+                    generatePDF();
+                }, 100);
+            });
+
+            const generatePDF = () => {
+                try {
+                    const { jsPDF } = window.jspdf;
+                    const doc = new jsPDF('p', 'pt', 'a4');
+                    let y = 40; // Initial vertical position
+
+                    // Set default font
+                    doc.setFont('helvetica');
+
+                    // Header Section
+                    doc.setFontSize(24);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text('PRASHANT BHARADWAJ', 300, y, { align: 'center' });
+                    y += 25;
+
+                    doc.setFontSize(12);
+                    doc.setFont('helvetica', 'normal');
+                    const headerSubTitle = resumeContainer.querySelector('header p')?.innerText || '';
+                    doc.text(headerSubTitle, 300, y, { align: 'center' });
+                    y += 25;
+
+                    // Contact Info
+                    const contactInfoElement = resumeContainer.querySelector('.contact-info');
+                    const contactInfo = contactInfoElement ? contactInfoElement.innerText.split('\n') : [];
+                    doc.setFontSize(10);
+                    if (contactInfo[0]) doc.text(contactInfo[0], 40, y);
+                    if (contactInfo[1]) doc.text(contactInfo[1], 40, y + 15);
+                    if (contactInfo[2]) doc.text(contactInfo[2], 40, y + 30);
+                    if (contactInfo[3]) doc.text(contactInfo[3], 40, y + 45);
+                    y += 65;
+
+                    // Function to add a new page if content overflows
+                    const addNewPage = () => {
+                        doc.addPage();
+                        y = 40;
+                    };
+
+                    // Helper to add a section title
+                    const addSectionTitle = (title) => {
+                        if (y > doc.internal.pageSize.height - 40) {
+                            addNewPage();
+                        }
+                        doc.setFontSize(16);
+                        doc.setFont('helvetica', 'bold');
+                        doc.text(title, 40, y);
+                        y += 15;
+                        doc.line(40, y, doc.internal.pageSize.width - 40, y); // Draw a line under the title
+                        y += 20;
+                    };
+
+                    // Summary Section
+                    addSectionTitle('SUMMARY');
+                    doc.setFontSize(10);
+                    doc.setFont('helvetica', 'normal');
+                    const summaryElement = resumeContainer.querySelector('.summary p');
+                    const summaryText = summaryElement ? summaryElement.innerText : '';
+                    const summaryLines = doc.splitTextToSize(summaryText, doc.internal.pageSize.width - 80);
+                    doc.text(summaryLines, 40, y);
+                    y += doc.getTextDimensions(summaryLines).h + 20;
+
+                    // Experience Section
+                    addSectionTitle('EXPERIENCE');
+                    const experienceItems = resumeContainer.querySelectorAll('.experience-item');
+                    experienceItems.forEach(item => {
+                        if (y > doc.internal.pageSize.height - 100) {
+                            addNewPage();
+                        }
+
+                        const title = item.querySelector('h3')?.innerText || '';
+                        const date = item.querySelector('.date')?.innerText || '';
+                        const location = item.querySelector('.job-location')?.innerText || '';
+
+                        doc.setFontSize(12);
+                        doc.setFont('helvetica', 'bold');
+                        doc.text(title, 55, y);
+                        doc.text(date, doc.internal.pageSize.width - 40, y, { align: 'right' });
+                        y += 15;
+
+                        doc.setFontSize(10);
+                        doc.setFont('helvetica', 'normal');
+                        doc.text(location, 55, y);
+                        y += 15;
+
+                        // Iterate through children to process titles and lists in order
+                        const itemChildren = item.children;
+                        Array.from(itemChildren).forEach(child => {
+                            if (child.tagName === 'H4') {
+                                const subTitle = child.innerText;
+                                doc.setFontSize(11);
+                                doc.setFont('helvetica', 'bold');
+                                y += 10;
+                                doc.text(subTitle, 55, y);
+                                y += 15;
+                            } else if (child.tagName === 'UL') {
+                                const listItems = child.querySelectorAll('li');
+                                listItems.forEach(li => {
+                                    const bulletText = '• ' + (li.innerText || '');
+                                    const bulletLines = doc.splitTextToSize(bulletText, doc.internal.pageSize.width - 80);
+                                    doc.setFontSize(10);
+                                    doc.setFont('helvetica', 'normal');
+                                    doc.text(bulletLines, 65, y);
+                                    y += doc.getTextDimensions(bulletLines).h + 5;
+                                });
+                                y += 10; // Space after each list
+                            }
+                        });
+
+                        y += 15; // Space between experience items
+                    });
+
+
+                    // Education Section
+                    addSectionTitle('EDUCATION');
+                    const educationItem = resumeContainer.querySelector('.education-item');
+                    const eduTitle = educationItem.querySelector('h3')?.innerText || '';
+                    const eduDate = educationItem.querySelector('.date')?.innerText || '';
+
+                    doc.setFontSize(12);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(eduTitle, 40, y);
+                    doc.text(eduDate, doc.internal.pageSize.width - 40, y, { align: 'right' });
+                    y += 20;
+
+                    // Skills Section
+                    addSectionTitle('SKILLS');
+                    const skillsTable = resumeContainer.querySelector('.skills-table');
+                    const skillsData = [];
+                    const tableRows = skillsTable.querySelectorAll('tbody tr');
+                    tableRows.forEach(row => {
+                        const category = row.querySelector('.skill-category')?.innerText || '';
+                        const skills = row.querySelector('td:last-child')?.innerText || '';
+                        skillsData.push([category, skills]);
+                    });
+
+                    doc.autoTable({
+                        startY: y,
+                        head: [['Category', 'Skills']],
+                        body: skillsData,
+                        theme: 'striped',
+                        headStyles: {
+                            fillColor: [232, 245, 233],
+                            textColor: [51, 51, 51],
+                            fontStyle: 'bold',
+                            fontSize: 10
+                        },
+                        bodyStyles: {
+                            fontSize: 9,
+                            cellPadding: 8
+                        },
+                        didDrawPage: (data) => {
+                            y = data.cursor.y;
+                        }
+                    });
+                    y = doc.autoTable.previous.finalY + 20;
+
+
+                    // Languages Section
+                    addSectionTitle('LANGUAGES');
+                    const langList = resumeContainer.querySelector('.languages-list');
+                    const languages = langList ? langList.innerText.split('\n') : [];
+                    doc.setFontSize(10);
+                    languages.forEach(lang => {
+                        doc.text('• ' + lang, 55, y);
+                        y += 15;
+                    });
+
+                    // Save the PDF
+                    doc.save('Prashant_Bharadwaj_Resume.pdf');
+                } catch (error) {
+                    console.error('Error generating PDF:', error);
+                    // Use a simple, non-blocking message
+                    downloadBtn.innerHTML = `<span class="button-text">Error!</span>`;
+                    setTimeout(() => {
+                        downloadBtn.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M19.35 10.04C18.67 6.59 15.33 4 11.5 4c-3.13 0-5.84 2.07-6.9 4.9C3.76 9.47 3 10.74 3 12c0 2.21 1.79 4 4 4h12c1.65 0 3-1.35 3-3 0-1.54-1.12-2.82-2.65-2.96zM17 13l-4 4v-4h-2v4l-4-4h3V7h2v6h3z"/>
+                            </svg>
+                            <span id="button-status" class="button-text">Download as PDF</span>
+                        `;
+                        downloadBtn.disabled = false;
+                    }, 2000);
+                } finally {
+                    // Reset button state regardless of success or failure
+                    if (downloadBtn.disabled) {
+                         downloadBtn.disabled = false;
+                         downloadBtn.innerHTML = `
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                <path d="M19.35 10.04C18.67 6.59 15.33 4 11.5 4c-3.13 0-5.84 2.07-6.9 4.9C3.76 9.47 3 10.74 3 12c0 2.21 1.79 4 4 4h12c1.65 0 3-1.35 3-3 0-1.54-1.12-2.82-2.65-2.96zM17 13l-4 4v-4h-2v4l-4-4h3V7h2v6h3z"/>
+                            </svg>
+                            <span id="button-status" class="button-text">Download as PDF</span>
+                        `;
+                    }
+                }
+            };
+        });
     </script>
 
 </body>
