@@ -269,7 +269,7 @@
 
         <section class="section summary">
             <h2 class="section-title">SUMMARY</h2>
-            <p>DevOps Engineer with 9+ years of experience spanning DevOps, SRE, and Cloud Infrastructure, specializing in Observability, Kubernetes, and AWS. Adept at building highly available distributed systems, developer platforms, and cost-optimized cloud infrastructure. Proven track record in incident response, migration of legacy systems to modern cloud-native architectures, and scaling observability systems beyond 20M cardinality.</p>
+            <p>DevOps Engineer with 9+ years of experience spanning DevOps, SRE, and Cloud Infrastructure, specializing in Observability, Kubernetes, and AWS. Proven track record in incident management, migration of legacy systems to modern architectures, and scaling observability systems beyond 20M cardinality.</p>
         </section>
 
         <section class="section experience">
@@ -283,30 +283,24 @@
                 <p class="job-location">Bangalore, India</p>
                 <h4>Observability:</h4>
                 <ul>
-                    <li>Built and scaled a federated observability stack to handle 20M+ metric cardinality, improving system reliability and developer visibility.</li>
-                    <li>Modernized incident response by migrating 1,000+ PagerDuty Event Rules to the Event Orchestrator via Infrastructure-as-Code.</li>
-                    <li>Enabled self-service monitoring by exposing custom alerts and recording rules through Helm values, giving 10+ development teams control of alerts and destinations.</li>
-                    <li>Reduced log ingestion costs by 50% by optimizing metadata pipelines and partnering with development teams to remove redundant fields.</li>
-                    <li>Migrated 200+ services from Nagios to Prometheus-based alerting.</li>
+                    <li>Built and scaled a federated observability stack with 20M+ metric cardinality. Defined the observability charter and led its execution with the team.</li>
+                    <li>Platformized alerts and recording rules creation via helm values, empowering dev teams to own and manage it independently for 200+ services across 5 verticals.</li>
+                    <li>Reduced log ingestion volume from ~50TB to ~25TB per day by optimizing agent config and collaborating with development teams.</li>
+                    <li>Migrated 1000+ PagerDuty Event Rules (Deprecated) to Event Orchestrator via Infrastructure-as-Code.</li>
+                    <li>Templatised Grafana dashboards to reduce operation toil and create consistent experience across environment.</li>
                     <li>Centralized observability for legacy applications by creating dynamic logging config.</li>
                 </ul>
                 <h4>EKS/Kubernetes:</h4>
                 <ul>
-                    <li>Created and Maintained EKS cluster via IaC with subnet planning for different vertical of Games2x7.</li>
-                    <li>Built a self-service guide for Jenkins to ArgoCD migration coupled with cluster migration, enabling development teams to deploy applications independently, reducing DevOps bottlenecks.</li>
-                    <li>Collaborated with product engineering teams to implement canary releases using Argo Rollouts, improving release safety and reducing rollback effort.</li>
+                    <li>Created EKS migration SOP for the team to follow, while segregating apps from one shared cluster to vertical specific dedicated cluster.</li>
+                    <li>Capacity planning for networking and appropriate subnet sizing for each vertical for EKS clusters of each vertical.</li>
+                    <li>Designed and Maintained EKS clusters of 500+ nodes via laC for different verticals of Games24x7.</li>
+                    <li>Enabled canary relases via Argo Rollouts for ~50 services.</li>
                 </ul>
                 <h4>Cost Efficiency:</h4>
                 <ul>
-                    <li>Optimized AWS costs by leading migration to Graviton instances and rightsizing stateful services.</li>
-                    <li>Applied storage lifecycle policies to reduce S3/snapshot waste.</li>
-                    <li>Identified wastage in terms of snapshots, s3 objects and applied optimal policies.</li>
-                    <li>Worked on Writing Lambda logs directly to the centralise logging solution, skipping CW logs completely to save cost.</li>
-                </ul>
-                <h4>Tools and Automation:</h4>
-                <ul>
-                    <li>Migrating apps from static machines to AWS ASG using terraform.</li>
-                    <li>ASG Deployment pipeline creation via ansible packer and python.</li>
+                    <li>Designed an alternate logging solution for AWS lambda, reducing cost by 90%, by shipping logs to last9 via mounted EFS volume.</li>
+                    <li>Optimized AWS costs by leading migration to Graviton instances, migrated my11circle apps to Graviton, helped steer towards 30% graviton adoption.</li>
                 </ul>
             </div>
 
@@ -317,9 +311,9 @@
                 </div>
                 <p class="job-location">Bangalore, India</p>
                 <ul>
-                    <li>Worked on setting up foundation for DR capabilities.</li>
-                    <li>Supporting developers with their operation requirements.</li>
-                    <li>Worked with atlantis, github action and terraform to create resources.</li>
+                    <li>Worked on setting up foundation for multi region active passive DR capabilities.</li>
+                    <li>Built a pipeline to detect any changes made via AWS console (UI) and raise an alert to security team to enfore laC.</li>
+                    <li>Operational work and on-call via terraform, github actions, atlantis.</li>
                 </ul>
             </div>
 
@@ -330,13 +324,13 @@
                 </div>
                 <p class="job-location">Bangalore, India</p>
                 <ul>
-                    <li>End to end migration of Data Reporting services to Docker and Kubernetes, used helm package manager for easier k8s yaml management and easier deployments.</li>
+                    <li>End to end migration of Data Reporting services to Docker and kubernetes, used helm package manager for easier k8s yaml management and easier deployments.</li>
                     <li>Maintained Reporting Services written in Java - added small features and fixed some bugs.</li>
                     <li>Migrated our CI/CD pipelines from Jenkins to in-house SOX compliant CI/CD tool.</li>
                     <li>Enabled CPU based auto scaling for reporting services and tuned the apps to utilise the CPU effectively.</li>
                     <li>As a part of SOX compliance track, worked on moving away the credentials from the repositories to a central service and used that as a secret via mutated k8s secrets.</li>
                     <li>Worked on adding authentication and authorization support in reporting apps.</li>
-                    <li>Worked with team to migrate one of the data pipeline from hive to spark using an in-house Framework written in Java.</li>
+                    <li>Worked with team to migrate one of the data pipeline from hive to spark using an in house Framework written in Java.</li>
                     <li>Worked on performance testing of the Data Apps and helped the team to optimise the performance of the App.</li>
                 </ul>
             </div>
@@ -348,7 +342,7 @@
                 </div>
                 <p class="job-location">Bangalore, India</p>
                 <ul>
-                    <li>Writing gitlab-ci.yml to achieve continuous integration.</li>
+                    <li>Writing gitlab-ci.yml to acheive continuous integration.</li>
                     <li>Containerization of different application including flask, django using Docker Setting up Monitoring Infrastructure using prometheus and grafana.</li>
                     <li>Setting up pypi server, email server and a forum using discourse.</li>
                     <li>Automating various activities using scripting languages like bash and python.</li>
@@ -362,7 +356,7 @@
                 </div>
                 <p class="job-location">Bangalore, India</p>
                 <ul>
-                    <li>Understand the design of telecom application and automate the validation of the functionality using by preparing parametrisable data and output queries, which can be picked by Test Framework to run regression Tests.</li>
+                    <li>Worked for a telecom client to understand requirement and validate the functionality using templatized automation framework.</li>
                     <li>Took training for OOPs using Java, HTML, CSS, JS, Data Warehousing using Informatica.</li>
                 </ul>
             </div>
@@ -390,23 +384,27 @@
                 <tbody>
                     <tr>
                         <td class="skill-category">Observability</td>
-                        <td>Prometheus, Grafana, otel, sumologic, signoz, pagerduty, alertmanager, clickhouse</td>
+                        <td>Prometheus, Grafana, Open Telemetry, Sumologic, Signoz, PagerDuty, Alertmanager, Clickhouse, Cloudwatch</td>
+                    </tr>
+                    <tr>
+                        <td class="skill-category">Container Orchestration - Proficient</td>
+                        <td>Docker, Kubernetes, Karpenter, Helm</td>
+                    </tr>
+                    <tr>
+                        <td class="skill-category">Infrastructure as Code</td>
+                        <td>Terraform, Ansible</td>
                     </tr>
                     <tr>
                         <td class="skill-category">Cloud Provider</td>
-                        <td>AWS</td>
-                    </tr>
-                    <tr>
-                        <td class="skill-category">Kubernetes</td>
-                        <td>EKS, Karpenter</td>
+                        <td>AWS - EC2, EKS, S3, VPC, Route53, IAM, Cloudwatch</td>
                     </tr>
                     <tr>
                         <td class="skill-category">CI/CD</td>
-                        <td>Jenkins, ArgoCD, ArgoRollouts, github actions, gitlab-ci, atlantis</td>
+                        <td>Jenkins, ArgoCD, ArgoRollouts, Github Actions, Gitlab-ci, Atlantis</td>
                     </tr>
                     <tr>
-                        <td class="skill-category">IaC</td>
-                        <td>terraform, ansible</td>
+                        <td class="skill-category">Tools/Programming/SRE practices</td>
+                        <td>Python, kafka, Linux, Shell scripting, Golden Signal, SLI/SLO/SLA</td>
                     </tr>
                 </tbody>
             </table>
